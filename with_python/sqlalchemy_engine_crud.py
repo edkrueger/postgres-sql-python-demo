@@ -42,6 +42,27 @@ def insert_many_dict_params(teachers):
         connection.exec_driver_sql(insert_template, teachers)
 
 
+def get_teachers_from_school(school):
+
+    query_template = """
+    select
+        concat(last_name, ', ', first_name) as name,
+        salary
+    from
+        teachers
+    where
+        school = %(school)s; 
+    """
+
+    with engine.connect() as connection:
+        result = connection.exec_driver_sql(query_template, {"school": school})
+
+        columns = result.keys()
+        raw_data = result.all()
+
+        return [{k: v for k, v in zip(columns, raw_row)} for raw_row in raw_data]
+
+
 if __name__ == "__main__":
 
     teachers = [
@@ -72,3 +93,7 @@ if __name__ == "__main__":
 
     insert_one_dict_params(teachers[1])
     insert_many_dict_params(teachers[2:])
+
+    anderson_teachers = get_teachers_from_school(school="Anderson High School")
+
+    print(anderson_teachers)
