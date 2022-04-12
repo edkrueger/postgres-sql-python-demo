@@ -60,3 +60,22 @@ engine.execute(create_table_cmd)
 
 # load the teachers
 df.to_sql("good_pandas_teachers", engine, if_exists="append", index=False)
+
+# grab a whole table with pandas -- better to use a query
+print(pd.read_sql_table("teachers", engine))
+
+# execute a query with pandas
+print(
+    pd.read_sql_query(
+        """
+    select
+        concat(last_name, ', ', first_name) as name,
+        salary
+    from
+        teachers
+    where
+        school = 'F.D. Roosevelt HS' 
+    """,
+        engine,
+    )
+)
