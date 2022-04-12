@@ -56,7 +56,7 @@ df.to_sql(
 )
 
 # create the schema with sqlalchemy
-engine.execute(create_table_cmd)
+engine.connect().exec_driver_sql(create_table_cmd)
 
 # load the teachers
 df.to_sql("good_pandas_teachers", engine, if_exists="append", index=False)
