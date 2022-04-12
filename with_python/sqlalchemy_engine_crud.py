@@ -91,8 +91,8 @@ if __name__ == "__main__":
 
     create_table()
 
-    insert_one_dict_params(teachers[1])
-    insert_many_dict_params(teachers[2:])
+    insert_one_dict_params(teachers[0])
+    insert_many_dict_params(teachers[1:])
 
     anderson_teachers = get_teachers_from_school(school="Anderson High School")
 
